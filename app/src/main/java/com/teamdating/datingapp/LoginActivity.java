@@ -3,6 +3,7 @@ package com.teamdating.datingapp;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
@@ -29,6 +30,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.studioidan.httpagent.HttpAgent;
+import com.studioidan.httpagent.JsonCallback;
+
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -168,27 +175,31 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             cancel = true;
         }
 
-        // Check for a valid email address.
-        if (TextUtils.isEmpty(email)) {
-            mEmailView.setError(getString(R.string.error_field_required));
-            focusView = mEmailView;
-            cancel = true;
-        } else if (!isEmailValid(email)) {
-            mEmailView.setError(getString(R.string.error_invalid_email));
-            focusView = mEmailView;
-            cancel = true;
-        }
-
         if (cancel) {
             // There was an error; don't attempt login and focus the first
             // form field with an error.
             focusView.requestFocus();
         } else {
-            // Show a progress spinner, and kick off a background task to
-            // perform the user login attempt.
-            showProgress(true);
-            mAuthTask = new UserLoginTask(email, password);
-            mAuthTask.execute((Void) null);
+            HttpAgent.get("https://rest-api.janine.project89109.nl/authentication/token?username="+ email +"&password=" + password)
+                .goJson(new JsonCallback() {
+                    @Override
+                    protected void onDone(boolean success, JSONObject jsonObject) {
+                        String results = getStringResults();
+                        JSONObject jsonResult;
+                        String token = null;
+
+                        try {
+                            jsonResult = new JSONObject(results);
+                            token = jsonResult.getString("token").toString();
+                        } catch (Throwable t) {}
+
+                        if(!TextUtils.isEmpty(token)) {
+                            startActivity(new Intent(LoginActivity.this, DagOmzet.class));
+                        } else {
+                            Toast.makeText(LoginActivity.this, "Geen geldig login" , Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
         }
     }
 
