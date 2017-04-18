@@ -30,7 +30,7 @@ public class DagOmzet extends AppCompatActivity {
 
     private void getResults() {
         StorageProvider sp = new StorageProvider(this);
-        HttpAgent.get("https://rest-api.janine.project89109.nl/stats/daily-targets/token?year=" + "2017")
+        HttpAgent.get("https://rest-api.janine.project89109.nl/stats/platforms/token")
                 .headers("Authorization", sp.getToken())
                 .goJson(new JsonCallback() {
                     @Override
