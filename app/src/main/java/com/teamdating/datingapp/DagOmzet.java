@@ -1,11 +1,19 @@
 package com.teamdating.datingapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.View;
+import android.widget.Toast;
+
+import com.studioidan.httpagent.HttpAgent;
+import com.studioidan.httpagent.JsonCallback;
+
+import org.json.JSONObject;
 
 public class DagOmzet extends AppCompatActivity {
 
@@ -16,13 +24,33 @@ public class DagOmzet extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+        getResults();
+
+    };
+
+    private void getResults() {
+        StorageProvider sp = new StorageProvider(this);
+        HttpAgent.get("https://rest-api.janine.project89109.nl/stats/daily-targets/token?year=" + "2017")
+                .headers("Authorization", sp.getToken())
+                .goJson(new JsonCallback() {
+                    @Override
+                    protected void onDone(boolean success, JSONObject jsonObject) {
+                        String results = getStringResults();
+                        org.json.JSONObject jsonResult;
+                        String token = null;
+
+                        try {
+                            jsonResult = new JSONObject(results);
+                            token = jsonResult.getString("token").toString();
+                        } catch (Throwable t) {
+                        }
+
+                        if (!TextUtils.isEmpty(token)) {
+                            // show results
+                        } else {
+                            Toast.makeText(DagOmzet.this, "Geen resultaten", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
     }
 }

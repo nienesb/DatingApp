@@ -1,0 +1,6 @@
+<root>
+    <item
+        name='com.studioidan.httpagent.HttpAgent com.studioidan.httpagent.HttpAgent headers(java.lang.String...)'>
+        <annotation name='android.support.annotation.NonNull' />
+    </item>
+</root>

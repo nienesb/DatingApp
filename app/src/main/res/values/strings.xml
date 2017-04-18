@@ -15,4 +15,5 @@
     </string>
     <string name="title_activity_main">MainActivity</string>
     <string name="title_activity_dag_omzet">DagOmzet</string>
+    <string name="title_activity_storage_provider">StorageProvider</string>
 </resources>

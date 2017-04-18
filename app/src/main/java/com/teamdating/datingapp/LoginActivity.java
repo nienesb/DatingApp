@@ -3,7 +3,9 @@ package com.teamdating.datingapp;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
@@ -153,6 +155,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      * errors are presented and no actual login attempt is made.
      */
     private void attemptLogin() {
+        final StorageProvider sp = new StorageProvider(this);
+
         if (mAuthTask != null) {
             return;
         }
@@ -180,26 +184,28 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             // form field with an error.
             focusView.requestFocus();
         } else {
-            HttpAgent.get("https://rest-api.janine.project89109.nl/authentication/token?username="+ email +"&password=" + password)
-                .goJson(new JsonCallback() {
-                    @Override
-                    protected void onDone(boolean success, JSONObject jsonObject) {
-                        String results = getStringResults();
-                        JSONObject jsonResult;
-                        String token = null;
+            HttpAgent.get("https://rest-api.janine.project89109.nl/authentication/token?username=" + email + "&password=" + password)
+                    .goJson(new JsonCallback() {
+                        @Override
+                        protected void onDone(boolean success, JSONObject jsonObject) {
+                            String results = getStringResults();
+                            JSONObject jsonResult;
+                            String token = null;
 
-                        try {
-                            jsonResult = new JSONObject(results);
-                            token = jsonResult.getString("token").toString();
-                        } catch (Throwable t) {}
+                            try {
+                                jsonResult = new JSONObject(results);
+                                token = jsonResult.getString("token").toString();
+                                sp.setToken(token);
+                            } catch (Throwable t) {
+                            }
 
-                        if(!TextUtils.isEmpty(token)) {
-                            startActivity(new Intent(LoginActivity.this, DagOmzet.class));
-                        } else {
-                            Toast.makeText(LoginActivity.this, "Geen geldig login" , Toast.LENGTH_SHORT).show();
+                            if (!TextUtils.isEmpty(token)) {
+                                startActivity(new Intent(LoginActivity.this, DagOmzet.class));
+                            } else {
+                                Toast.makeText(LoginActivity.this, "Geen geldig login", Toast.LENGTH_SHORT).show();
+                            }
                         }
-                    }
-                });
+                    });
         }
     }
 
