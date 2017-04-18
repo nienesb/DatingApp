@@ -156,6 +156,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      */
     private void attemptLogin() {
         final StorageProvider sp = new StorageProvider(this);
+        final JsonConverter jc = new JsonConverter();
 
         if (mAuthTask != null) {
             return;
@@ -194,7 +195,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
                             try {
                                 jsonResult = new JSONObject(results);
-                                token = jsonResult.getString("token").toString();
+                                token = jc.getString(jsonResult, "token");
                                 sp.setToken(token);
                             } catch (Throwable t) {
                             }
