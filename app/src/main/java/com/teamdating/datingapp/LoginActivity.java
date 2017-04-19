@@ -203,7 +203,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                             if (!TextUtils.isEmpty(token)) {
                                 startActivity(new Intent(LoginActivity.this, DagOmzet.class));
                             } else {
-                                Toast.makeText(LoginActivity.this, "Geen geldig login", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(LoginActivity.this, "Geen geldige login", Toast.LENGTH_SHORT).show();
                             }
                         }
                     });
