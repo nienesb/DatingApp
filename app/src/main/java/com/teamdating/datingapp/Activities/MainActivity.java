@@ -1,4 +1,4 @@
-package com.teamdating.datingapp;
+package com.teamdating.datingapp.Activities;
 
 import android.content.Context;
 import android.os.Bundle;

@@ -1,11 +1,9 @@
-package com.teamdating.datingapp;
+package com.teamdating.datingapp.Activities;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
@@ -36,6 +34,9 @@ import android.widget.Toast;
 
 import com.studioidan.httpagent.HttpAgent;
 import com.studioidan.httpagent.JsonCallback;
+import com.teamdating.datingapp.JsonConverter;
+import com.teamdating.datingapp.R;
+import com.teamdating.datingapp.StorageProvider;
 
 import org.json.JSONObject;
 
