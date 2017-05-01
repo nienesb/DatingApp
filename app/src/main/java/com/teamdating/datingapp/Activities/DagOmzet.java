@@ -7,10 +7,12 @@ import android.text.TextUtils;
 import android.widget.Toast;
 
 import com.studioidan.httpagent.HttpAgent;
+import com.studioidan.httpagent.JsonArrayCallback;
 import com.studioidan.httpagent.JsonCallback;
 import com.teamdating.datingapp.R;
 import com.teamdating.datingapp.StorageProvider;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class DagOmzet extends AppCompatActivity {
@@ -24,31 +26,29 @@ public class DagOmzet extends AppCompatActivity {
 
         getResults();
 
-    };
+    }
+
+    ;
 
     private void getResults() {
         StorageProvider sp = new StorageProvider(this);
-        HttpAgent.get("https://rest-api.janine.project89109.nl/stats/platforms/token")
-                .headers("Authorization", sp.getToken())
-                .goJson(new JsonCallback() {
+        String token = sp.getToken();
+        HttpAgent.get("https://rest-api.janine.project89109.nl/stats/daily-targets")
+                .headers("Authorization", "token " + token, "Content-Type", "application/json")
+                .goJsonArray(new JsonArrayCallback() {
                     @Override
-                    protected void onDone(boolean success, JSONObject jsonObject) {
-                        String results = getStringResults();
-                        org.json.JSONObject jsonResult;
-                        String token = null;
+                    protected void onDone(boolean success, JSONArray jsonArray) {
 
-                        try {
-                            jsonResult = new JSONObject(results);
-                            token = jsonResult.getString("token").toString();
-                        } catch (Throwable t) {
-                        }
-
-                        if (!TextUtils.isEmpty(token)) {
-                            // show results
+                        if (jsonArray != null) {
+                            showDagomzet(jsonArray);
                         } else {
-                            Toast.makeText(DagOmzet.this, "Geen resultaten", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(DagOmzet.this, "Geen resultaten van daily-targets ontvangen", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
+    }
+
+    private void showDagomzet(JSONArray jsonArray) {
+        Toast.makeText(DagOmzet.this, jsonArray.toString(), Toast.LENGTH_SHORT).show();
     }
 }

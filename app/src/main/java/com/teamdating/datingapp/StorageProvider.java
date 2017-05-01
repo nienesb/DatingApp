@@ -21,7 +21,8 @@ public class StorageProvider extends AppCompatActivity {
 
     public String getToken () {
         SharedPreferences.Editor editor = prefs.edit();
-        return prefs.getString("token", "");
+        String token = prefs.getString("token", "");
+        return token;
     }
 
 }
