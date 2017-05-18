@@ -18,14 +18,10 @@ import org.json.JSONObject;
 
 public class DagOmzet extends AppCompatActivity {
 
-    StorageProvider sp = new StorageProvider(this);
-    String token;
     JSONArray platforms = new JSONArray();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        sp = new StorageProvider(this);
-        token = sp.getToken();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dag_omzet);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -35,6 +31,9 @@ public class DagOmzet extends AppCompatActivity {
     }
 
     private void getPlatforms() {
+        StorageProvider sp = new StorageProvider(this);
+        String token = sp.getToken();
+
         HttpAgent.get("https://rest-api.janine.project89109.nl/platforms")
                 .headers("Authorization", "token " + token, "Content-Type", "application/json")
                 .goJsonArray(new JsonArrayCallback() {
@@ -51,6 +50,8 @@ public class DagOmzet extends AppCompatActivity {
     }
 
     private void getResults() {
+        StorageProvider sp = new StorageProvider(this);
+        String token = sp.getToken();
         HttpAgent.get("https://rest-api.janine.project89109.nl/stats/daily-targets")
                 .headers("Authorization", "token " + token, "Content-Type", "application/json")
                 .goJsonArray(new JsonArrayCallback() {
