@@ -33,7 +33,6 @@ public class DagOmzet extends AppCompatActivity {
     private void getPlatforms() {
         StorageProvider sp = new StorageProvider(this);
         String token = sp.getToken();
-
         HttpAgent.get("https://rest-api.janine.project89109.nl/platforms")
                 .headers("Authorization", "token " + token, "Content-Type", "application/json")
                 .goJsonArray(new JsonArrayCallback() {
