@@ -36,6 +36,10 @@
         <activity
             android:name=".StorageProvider"
             android:label="@string/title_activity_storage_provider"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Activities.DetailScherm"
+            android:label="@string/title_activity_detail_scherm"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
