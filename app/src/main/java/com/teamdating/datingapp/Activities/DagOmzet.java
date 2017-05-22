@@ -62,10 +62,6 @@ public class DagOmzet extends AppCompatActivity {
                             jsonArray = addPlatformsToStats(jsonArray);
                             jsonToList(jsonArray);
                                 //TODO ADD jsonArray TO ARRAYADAPTER and set it to the listview
-
-
-
-
                         } else {
                             Toast.makeText(DagOmzet.this, "Geen resultaten van daily-targets ontvangen", Toast.LENGTH_SHORT).show();
                         }

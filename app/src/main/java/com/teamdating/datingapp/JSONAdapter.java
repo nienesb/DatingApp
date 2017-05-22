@@ -27,38 +27,22 @@ import static android.R.id.list;
 
 public class JSONAdapter extends ArrayAdapter<List>{
 
-    public JSONAdapter(@NonNull Context context, @LayoutRes int resource) {
-        super(context, resource);
+    Context context;
+
+    public JSONAdapter(@NonNull Context context, @LayoutRes int resource, List<Platform> platforms) {
+        super(context, resource, platforms);
+        this.context = context;
     }
 
-    // method converts JSONArray to List of Maps
-    /*protected static List<Map<String, String>> getListFromJsonArray(JSONArray jsonArray) {
-        ArrayList<Map<String, String>> list = new ArrayList<Map<String, String>>();
-        Map<String, String> map;
-        // fill the list
-        for (int i = 0; i < jsonArray.length(); i++) {
-            map = new HashMap<String, String>();
-            try {
-                JSONObject jo = (JSONObject) jsonArray.get(i);
-                // fill map
-                Iterator iter = jo.keys();
-                while (iter.hasNext()) {
-                    String currentKey = (String) iter.next();
-                    map.put(currentKey, jo.getString(currentKey));
-                }
-                // add map to list
-                list.add(map);
-            } catch (JSONException e) {
-                Log.e("JSON", e.getLocalizedMessage());
-            }
-        }
-        return list;
-    }*/
+    private class ViewHolder {
+
+    }
+
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         // Get the data item for this position
-        Platform platformName = JSONObject.get("name");
+        Platform platformName = jsonArray.get("name");
         // Check if an existing view is being reused, otherwise inflate the view
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.activity_dag_omzet, parent, false);
