@@ -10,7 +10,7 @@ import java.math.RoundingMode;
  * Created by Janine on 18-4-2017.
  */
 
-public class JsonConverter {
+public class JSONConverter {
 
     public String getString(JSONObject jsonResult, String jsonObject) throws JSONException {
         String strResult;
@@ -21,15 +21,11 @@ public class JsonConverter {
         return strResult;
     }
 
-    ;
-
     public int getInt(JSONObject jsonResult, String jsonObject) throws JSONException {
         int intResult;
         intResult = jsonResult.getInt(jsonObject);
         return intResult;
     }
-
-    ;
 
     public double getDouble(JSONObject jsonResult, String jsonObject) throws JSONException {
         double doubleResult;
@@ -38,11 +34,8 @@ public class JsonConverter {
         return doubleResult;
     }
 
-    ;
-
     public static double round(double value, int places) {
         if (places < 0) throw new IllegalArgumentException();
-
         BigDecimal bd = new BigDecimal(value);
         bd = bd.setScale(places, RoundingMode.HALF_UP);
         return bd.doubleValue();

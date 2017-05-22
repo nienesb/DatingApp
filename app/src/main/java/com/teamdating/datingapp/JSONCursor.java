@@ -13,6 +13,8 @@ import android.os.Bundle;
 
 public class JSONCursor extends AbstractCursor {
 
+    //https://gist.github.com/soeminnminn/e057ef7111d8f3e5701d
+
     public static final String DATA_KEY = "d";
 
     private JSONArray mJsonArray;
