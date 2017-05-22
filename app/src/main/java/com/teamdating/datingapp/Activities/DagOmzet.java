@@ -61,11 +61,8 @@ public class DagOmzet extends AppCompatActivity {
                         if (jsonArray != null) {
                             jsonArray = addPlatformsToStats(jsonArray);
                             jsonToList(jsonArray);
-//                            try {
-//                                    Toast.makeText(DagOmzet.this, jsonArray.getJSONObject(0).get("startDate").toString(), Toast.LENGTH_LONG).show();
-//                                } catch (JSONException e) {
-//                                    e.printStackTrace();
-//                                }
+                                //TODO ADD jsonArray TO ARRAYADAPTER and set it to the listview
+
 
 
 
