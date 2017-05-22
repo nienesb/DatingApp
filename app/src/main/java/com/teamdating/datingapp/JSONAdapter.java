@@ -1,8 +1,6 @@
 package com.teamdating.datingapp;
 
-import android.content.Context;
 import android.util.Log;
-import android.widget.SimpleAdapter;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -14,14 +12,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-public class JSONAdapter extends SimpleAdapter {
+public class JSONAdapter {
 
-    //http://stackoverflow.com/questions/3724903/how-to-put-a-jsonarray-into-an-android-listview
-
-    public JSONAdapter(Context context, JSONArray jsonArray,
-                       int resource, String[] from, int[] to) {
-        super(context, getListFromJsonArray(jsonArray), resource, from, to);
-    }
 
     // method converts JSONArray to List of Maps
     protected static List<Map<String, String>> getListFromJsonArray(JSONArray jsonArray) {
@@ -34,7 +26,7 @@ public class JSONAdapter extends SimpleAdapter {
                 JSONObject jo = (JSONObject) jsonArray.get(i);
                 // fill map
                 Iterator iter = jo.keys();
-                while(iter.hasNext()) {
+                while (iter.hasNext()) {
                     String currentKey = (String) iter.next();
                     map.put(currentKey, jo.getString(currentKey));
                 }
