@@ -1,8 +1,12 @@
 package com.teamdating.datingapp.Activities;
 
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -28,26 +32,39 @@ public class DagOmzet extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         mListView = (ListView) findViewById(R.id.list_view);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getPlatforms();
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if(id == 16908332) { // TODO: Find a way to get the back button id?, for now hardcoded
+            Intent intent = new Intent(DagOmzet.this, MenuActivity.class);
+            startActivity(intent);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void getPlatforms() {
         StorageProvider sp = new StorageProvider(this);
         String token = sp.getToken();
         HttpAgent.get("https://rest-api.janine.project89109.nl/platforms")
-                .headers("Authorization", "token " + token, "Content-Type", "application/json")
-                .goJsonArray(new JsonArrayCallback() {
-                    @Override
-                    protected void onDone(boolean success, JSONArray jsonArray) {
-                        if (jsonArray != null) {
-                            platforms = jsonArray;
-                            getResults();
-                        } else {
-                            Toast.makeText(DagOmzet.this, "Geen resultaten van platforms ontvangen", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
+        .headers("Authorization", "token " + token, "Content-Type", "application/json")
+        .goJsonArray(new JsonArrayCallback() {
+            @Override
+            protected void onDone(boolean success, JSONArray jsonArray) {
+            if (jsonArray != null) {
+                platforms = jsonArray;
+                getResults();
+            } else {
+                Toast.makeText(DagOmzet.this, "Geen resultaten van platforms ontvangen", Toast.LENGTH_SHORT).show();
+            }
+            }
+        });
     }
 
     private void getResults() {
