@@ -82,7 +82,7 @@ public class MenuActivity extends AppCompatActivity
             startActivity(new Intent(MenuActivity.this, DagOmzet.class));
         } else if (id == R.id.note_icon) {
             startActivity(new Intent(MenuActivity.this, NoteActivity.class));
-            Toast.makeText(MenuActivity.this, "Hier komt straks notities", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(MenuActivity.this, "Hier komt straks notities", Toast.LENGTH_SHORT).show();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
