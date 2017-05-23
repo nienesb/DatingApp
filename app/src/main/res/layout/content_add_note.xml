@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.teamdating.datingapp.Notes.AddNoteActivity"
+    tools:showIn="@layout/note_add_activity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="4dp"
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="0dp">
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:showDividers="beginning|end"
+            app:cardBackgroundColor="#FFFFFF"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="8dp">
+
+            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center_vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:id="@+id/note_item_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Title" />
+
+                <EditText
+                    android:id="@+id/note_add_item"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName"
+                    android:layout_below="@+id/note_item_title"
+                    android:layout_width="match_parent">
+                </EditText>
+
+                <TextView
+                    android:id="@+id/note_item_platform"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Platform"
+                    android:layout_marginTop="8dp"
+                    android:layout_below="@+id/note_add_item" />
+
+                <EditText
+                    android:id="@+id/note_add_platform"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName"
+                    android:layout_below="@+id/note_item_platform"
+                    android:layout_width="match_parent">
+                </EditText>
+
+                <TextView
+                    android:id="@+id/note_item_notes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Notes"
+                    android:layout_below="@id/note_item_platform"
+                    android:layout_marginTop="8dp" />
+
+                <EditText
+                    android:id="@+id/note_add_notes"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName"
+                    android:layout_below="@+id/note_item_platform"
+                    android:layout_width="match_parent"
+                    android:clickable="true">
+                </EditText>
+
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+    </LinearLayout>
+
+</LinearLayout>

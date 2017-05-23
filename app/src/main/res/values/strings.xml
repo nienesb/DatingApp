@@ -111,4 +111,14 @@
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+
+
+    <!-- Notes -->
+    <string name="note_deleted">note has been deleted</string>
+    <string name="note_title_is_required">Title is required!</string>
+    <string name="note_platform_is_required">Platform is required!</string>
+    <string name="note_title_field_is_empty">Title field is empty</string>
+    <string name="note_platform_field_is_empty">Platform field is empty</string>
+    <string name="note_has_been_added">Note has been added</string>
+    <string name="note_has_been_modified">Note has been modified</string>
 </resources>

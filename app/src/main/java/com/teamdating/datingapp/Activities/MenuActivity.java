@@ -15,6 +15,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.teamdating.datingapp.Notes.NoteActivity;
 import com.teamdating.datingapp.R;
 
 public class MenuActivity extends AppCompatActivity
@@ -80,7 +81,7 @@ public class MenuActivity extends AppCompatActivity
             // Handle the camera action
             startActivity(new Intent(MenuActivity.this, DagOmzet.class));
         } else if (id == R.id.note_icon) {
-            //startActivity(new Intent(MenuActivity.this, Notes.class));
+            startActivity(new Intent(MenuActivity.this, NoteActivity.class));
             Toast.makeText(MenuActivity.this, "Hier komt straks notities", Toast.LENGTH_SHORT).show();
         }
 
