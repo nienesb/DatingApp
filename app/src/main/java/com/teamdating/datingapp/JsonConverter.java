@@ -10,7 +10,7 @@ import java.math.RoundingMode;
  * Created by Janine on 18-4-2017.
  */
 
-public class JSONConverter {
+public class JsonConverter {
 
     public String getString(JSONObject jsonResult, String jsonObject) throws JSONException {
         String strResult;

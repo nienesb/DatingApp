@@ -19,6 +19,7 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
@@ -34,7 +35,7 @@ import android.widget.Toast;
 
 import com.studioidan.httpagent.HttpAgent;
 import com.studioidan.httpagent.JsonCallback;
-import com.teamdating.datingapp.JSONConverter;
+import com.teamdating.datingapp.JsonConverter;
 import com.teamdating.datingapp.R;
 import com.teamdating.datingapp.StorageProvider;
 
@@ -81,6 +82,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         // Set up the login form.
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
         populateAutoComplete();
+        getSupportActionBar().setTitle("TeamDating");
 
         mPasswordView = (EditText) findViewById(R.id.password);
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -157,7 +159,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      */
     private void attemptLogin() {
         final StorageProvider sp = new StorageProvider(this);
-        final JSONConverter jc = new JSONConverter();
+        final JsonConverter jc = new JsonConverter();
 
         if (mAuthTask != null) {
             return;
@@ -202,7 +204,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                             }
 
                             if (!TextUtils.isEmpty(token)) {
-                                startActivity(new Intent(LoginActivity.this, DagOmzet.class));
+                                startActivity(new Intent(LoginActivity.this, MenuActivity.class));
                             } else {
                                 Toast.makeText(LoginActivity.this, "Geen geldige login", Toast.LENGTH_SHORT).show();
                             }

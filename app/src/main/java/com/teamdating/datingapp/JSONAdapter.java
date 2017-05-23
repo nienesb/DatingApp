@@ -25,7 +25,7 @@ import java.util.Map;
 
 import static android.R.id.list;
 
-public class JSONAdapter extends ArrayAdapter<List>{
+/*public class JSONAdapter extends ArrayAdapter<List>{
 
     Context context;
 
@@ -54,4 +54,4 @@ public class JSONAdapter extends ArrayAdapter<List>{
         // Return the completed view to render on screen
         return convertView;
     }
-}
+}*/
