@@ -45,6 +45,23 @@
             android:name=".Activities.MenuActivity"
             android:label="@string/title_activity_menu"
             android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".Notes.NoteActivity"
+            android:label="@string/title_activity_note"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Notes.AddNoteActivity"
+            android:label="@string/title_activity_add_note"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustResize"/>
+        <activity
+            android:name=".Notes.EditNoteActivity"
+            android:label="@string/title_activity_edit_note"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Notes.EditNote"
+            android:label="@string/title_activity_edit_note"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

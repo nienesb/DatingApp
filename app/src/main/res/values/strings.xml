@@ -121,4 +121,7 @@
     <string name="note_platform_field_is_empty">Platform field is empty</string>
     <string name="note_has_been_added">Note has been added</string>
     <string name="note_has_been_modified">Note has been modified</string>
+    <string name="title_activity_note">NoteActivity</string>
+    <string name="title_activity_add_note">AddNoteActivity</string>
+    <string name="title_activity_edit_note">EditNoteActivity</string>
 </resources>

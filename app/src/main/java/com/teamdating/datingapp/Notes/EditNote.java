@@ -12,9 +12,7 @@ import android.text.style.ForegroundColorSpan;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.teamdating.datingapp.Notes.model.Note;
@@ -24,7 +22,6 @@ import com.teamdating.datingapp.R;
 public class EditNote extends AppCompatActivity {
 
     private DBCRUD mDataSource;
-    private ArrayAdapter statusAdapter;
     private EditText mTitle;
     private EditText mPlatform;
     private EditText mNotes;
