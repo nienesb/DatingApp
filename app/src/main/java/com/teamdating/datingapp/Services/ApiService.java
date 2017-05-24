@@ -1,5 +1,6 @@
 package com.teamdating.datingapp.Services;
 
+import com.teamdating.datingapp.Models.Platform;
 import com.teamdating.datingapp.Models.User;
 
 import retrofit2.Call;
@@ -15,4 +16,6 @@ import retrofit2.http.Query;
 public interface ApiService {
     @GET("authentication/token")
     Call<User> login(@Query("username") String username, @Query("password") String password);
+
+    //@GET("stats/daily-targets")
 }

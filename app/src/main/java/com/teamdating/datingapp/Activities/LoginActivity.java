@@ -37,7 +37,6 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.studioidan.httpagent.HttpAgent;
 import com.studioidan.httpagent.JsonCallback;
-import com.teamdating.datingapp.JsonConverter;
 import com.teamdating.datingapp.Models.User;
 import com.teamdating.datingapp.R;
 import com.teamdating.datingapp.Services.ApiController;
@@ -168,7 +167,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      */
     private void attemptLogin() {
         final StorageProvider sp = new StorageProvider(this);
-        final JsonConverter jc = new JsonConverter();
 
         if (mAuthTask != null) {
             return;

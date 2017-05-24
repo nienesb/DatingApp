@@ -86,7 +86,7 @@ public class DagOmzet extends AppCompatActivity {
         });
     }
 
-    private JSONArray addPlatformsToStats(JSONArray jsonArray) {
+    public JSONArray addPlatformsToStats(JSONArray jsonArray) {
         for (int i = 0; i < platforms.length(); i++) {
             for(int p = 0; p < jsonArray.length(); p++) {
                 try {
