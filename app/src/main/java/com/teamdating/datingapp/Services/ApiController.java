@@ -23,9 +23,7 @@ public class ApiController implements Callback<User> {
     static final String BASE_URL = "https://rest-api.janine.project89109.nl/";
     final User[] user = {new User()};
 
-    public User Login(String username, String password) {
-
-
+    public User login(String username, String password) {
         Gson gson = new GsonBuilder()
                 .setLenient()
                 .create();
@@ -45,9 +43,8 @@ public class ApiController implements Callback<User> {
     public void onResponse(Call<User> call, Response<User> response) {
         int statusCode = response.code();
         user[0] = response.body();
-        //Gson gson = new Gson();
-        //user[0] = gson.fromJson(String.valueOf(response.body()), User.class);
     }
+    // HIERBOVEN WORDT USER WEL GEVULD!!!
 
     @Override
     public void onFailure(Call<User> call, Throwable t) {
