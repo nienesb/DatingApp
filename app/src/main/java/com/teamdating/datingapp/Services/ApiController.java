@@ -35,10 +35,8 @@ public class ApiController implements Callback<User> {
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
 
-        final ApiService[] apiService = {retrofit.create(ApiService.class)};
-
-
-        Call<User> call = apiService[0].login(username, password);
+        ApiService apiService = retrofit.create(ApiService.class);
+        Call<User> call = apiService.login(username, password);
         call.enqueue(new Callback<User>() {
 
 
@@ -46,6 +44,8 @@ public class ApiController implements Callback<User> {
             public void onResponse(Call<User> call, Response<User> response) {
                 int statusCode = response.code();
                 user[0] = response.body();
+                //Gson gson = new Gson();
+                //user[0] = gson.fromJson(String.valueOf(response.body()), User.class);
             }
 
             @Override

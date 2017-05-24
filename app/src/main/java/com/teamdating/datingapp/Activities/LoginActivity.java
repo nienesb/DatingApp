@@ -34,6 +34,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.studioidan.httpagent.HttpAgent;
 import com.studioidan.httpagent.JsonCallback;
 import com.teamdating.datingapp.JsonConverter;
@@ -200,36 +201,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             User user = apiController.Login(email, password);
 
             if(user != null) {
-                //
+
             }
 
             //Toast.makeText(LoginActivity.this, result, Toast.LENGTH_SHORT).show();
-
-
-
-
-
-
-            /*apiService.Login(email, password, new Callback<String>() {
-                @Override
-                public void onResponse(Call<String> call, Response<String> response) {
-
-                }
-
-                @Override
-                public void onFailure(Call<String> call, Throwable t) {
-
-                }
-
-                public void success(String jsonResponse, Response response) {
-                    Toast.makeText(LoginActivity.this, response.toString(), Toast.LENGTH_SHORT).show();
-                    Toast.makeText(LoginActivity.this, jsonResponse.toString(), Toast.LENGTH_SHORT).show();
-                }
-                /*@Override public void failure(RetrofitError retrofitError) {
-                    Toast.makeText(LoginActivity.this, "Geen geldige login", Toast.LENGTH_SHORT).show();
-                }
-            });*/
-
 
             /*HttpAgent.get("https://rest-api.janine.project89109.nl/authentication/token?username=" + email + "&password=" + password)
                 .goJson(new JsonCallback() {
@@ -237,13 +212,16 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                     protected void onDone(boolean success, JSONObject jsonObject) {
                         String results = getStringResults();
                         JSONObject jsonResult;
-                        JSONObject claimSet = null;
+                        User claimSet = null;
                         String token = null;
 
                         try {
                             jsonResult = new JSONObject(results);
                             token = jc.getString(jsonResult, "token");
-                            claimSet = new JSONObject(jc.getString(jsonResult, "claimSet"));
+
+                            Gson gson = new Gson();
+                            claimSet =  gson.fromJson(jc.getString(jsonResult, "claimSet"), User.class);
+                            //claimSet = new JSONObject(jc.getString(jsonResult, "claimSet"));
                             sp.setToken(token);
                         } catch (Throwable t) {
 
