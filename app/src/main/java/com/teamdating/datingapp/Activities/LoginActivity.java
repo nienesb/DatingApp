@@ -5,6 +5,7 @@ import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -36,13 +37,20 @@ import android.widget.Toast;
 import com.studioidan.httpagent.HttpAgent;
 import com.studioidan.httpagent.JsonCallback;
 import com.teamdating.datingapp.JsonConverter;
+import com.teamdating.datingapp.Models.User;
 import com.teamdating.datingapp.R;
+import com.teamdating.datingapp.Services.ApiController;
+import com.teamdating.datingapp.Services.ApiService;
 import com.teamdating.datingapp.StorageProvider;
 
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import static android.Manifest.permission.READ_CONTACTS;
 
@@ -188,28 +196,70 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             // form field with an error.
             focusView.requestFocus();
         } else {
-            HttpAgent.get("https://rest-api.janine.project89109.nl/authentication/token?username=" + email + "&password=" + password)
-                    .goJson(new JsonCallback() {
-                        @Override
-                        protected void onDone(boolean success, JSONObject jsonObject) {
-                            String results = getStringResults();
-                            JSONObject jsonResult;
-                            String token = null;
+            ApiController apiController = new ApiController();
+            User user = apiController.Login(email, password);
 
-                            try {
-                                jsonResult = new JSONObject(results);
-                                token = jc.getString(jsonResult, "token");
-                                sp.setToken(token);
-                            } catch (Throwable t) {
-                            }
+            if(user != null) {
+                //
+            }
 
-                            if (!TextUtils.isEmpty(token)) {
-                                startActivity(new Intent(LoginActivity.this, MenuActivity.class));
-                            } else {
-                                Toast.makeText(LoginActivity.this, "Geen geldige login", Toast.LENGTH_SHORT).show();
-                            }
+            //Toast.makeText(LoginActivity.this, result, Toast.LENGTH_SHORT).show();
+
+
+
+
+
+
+            /*apiService.Login(email, password, new Callback<String>() {
+                @Override
+                public void onResponse(Call<String> call, Response<String> response) {
+
+                }
+
+                @Override
+                public void onFailure(Call<String> call, Throwable t) {
+
+                }
+
+                public void success(String jsonResponse, Response response) {
+                    Toast.makeText(LoginActivity.this, response.toString(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, jsonResponse.toString(), Toast.LENGTH_SHORT).show();
+                }
+                /*@Override public void failure(RetrofitError retrofitError) {
+                    Toast.makeText(LoginActivity.this, "Geen geldige login", Toast.LENGTH_SHORT).show();
+                }
+            });*/
+
+
+            /*HttpAgent.get("https://rest-api.janine.project89109.nl/authentication/token?username=" + email + "&password=" + password)
+                .goJson(new JsonCallback() {
+                    @Override
+                    protected void onDone(boolean success, JSONObject jsonObject) {
+                        String results = getStringResults();
+                        JSONObject jsonResult;
+                        JSONObject claimSet = null;
+                        String token = null;
+
+                        try {
+                            jsonResult = new JSONObject(results);
+                            token = jc.getString(jsonResult, "token");
+                            claimSet = new JSONObject(jc.getString(jsonResult, "claimSet"));
+                            sp.setToken(token);
+                        } catch (Throwable t) {
+
                         }
-                    });
+
+                        if (!TextUtils.isEmpty(token)) {
+                            Intent menuIntent = new Intent(LoginActivity.this, MenuActivity.class);
+                            if(claimSet != null) {
+                                menuIntent.putExtra("claimSet", (Parcelable) claimSet);
+                            }
+                            startActivity(menuIntent);
+                        } else {
+                            Toast.makeText(LoginActivity.this, "Geen geldige login", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });*/
         }
     }
 

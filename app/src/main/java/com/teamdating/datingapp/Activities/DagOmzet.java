@@ -57,12 +57,12 @@ public class DagOmzet extends AppCompatActivity {
         .goJsonArray(new JsonArrayCallback() {
             @Override
             protected void onDone(boolean success, JSONArray jsonArray) {
-            if (jsonArray != null) {
-                platforms = jsonArray;
-                getResults();
-            } else {
-                Toast.makeText(DagOmzet.this, "Geen resultaten van platforms ontvangen", Toast.LENGTH_SHORT).show();
-            }
+                if (jsonArray != null) {
+                    platforms = jsonArray;
+                    getResults();
+                } else {
+                    Toast.makeText(DagOmzet.this, "Geen resultaten van platforms ontvangen", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
@@ -71,19 +71,19 @@ public class DagOmzet extends AppCompatActivity {
         StorageProvider sp = new StorageProvider(this);
         String token = sp.getToken();
         HttpAgent.get("https://rest-api.janine.project89109.nl/stats/daily-targets")
-                .headers("Authorization", "token " + token, "Content-Type", "application/json")
-                .goJsonArray(new JsonArrayCallback() {
-                    @Override
-                    protected void onDone(boolean success, JSONArray jsonArray) {
-                        if (jsonArray != null) {
-                            jsonArray = addPlatformsToStats(jsonArray);
-                            jsonToList(jsonArray);
-                                //TODO ADD jsonArray TO ARRAYADAPTER and set it to the listview
-                        } else {
-                            Toast.makeText(DagOmzet.this, "Geen resultaten van daily-targets ontvangen", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
+        .headers("Authorization", "token " + token, "Content-Type", "application/json")
+        .goJsonArray(new JsonArrayCallback() {
+            @Override
+            protected void onDone(boolean success, JSONArray jsonArray) {
+                if (jsonArray != null) {
+                    jsonArray = addPlatformsToStats(jsonArray);
+                    jsonToList(jsonArray);
+                        //TODO ADD jsonArray TO ARRAYADAPTER and set it to the listview
+                } else {
+                    Toast.makeText(DagOmzet.this, "Geen resultaten van daily-targets ontvangen", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 
     private JSONArray addPlatformsToStats(JSONArray jsonArray) {
