@@ -39,7 +39,6 @@ import com.studioidan.httpagent.HttpAgent;
 import com.studioidan.httpagent.JsonCallback;
 import com.teamdating.datingapp.Models.User;
 import com.teamdating.datingapp.R;
-import com.teamdating.datingapp.Services.ApiController;
 import com.teamdating.datingapp.Services.ApiService;
 import com.teamdating.datingapp.StorageProvider;
 
@@ -47,10 +46,6 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 import static android.Manifest.permission.READ_CONTACTS;
 
@@ -63,6 +58,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      * Id to identity READ_CONTACTS permission request.
      */
     private static final int REQUEST_READ_CONTACTS = 0;
+
+    static final String BASE_URL = "https://rest-api.janine.project89109.nl/";
 
     /**
      * A dummy authentication store containing known user names and passwords.
@@ -81,6 +78,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private EditText mPasswordView;
     private View mProgressView;
     private View mLoginFormView;
+    private ApiService apiService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -159,7 +157,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         }
     }
 
-
     /**
      * Attempts to sign in or register the account specified by the login form.
      * If there are form errors (invalid email, missing fields, etc.), the
@@ -195,45 +192,37 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             // form field with an error.
             focusView.requestFocus();
         } else {
-            ApiController apiController = new ApiController();
-            //TODO hieronder moet de response uit onResponse getoond worden
-            apiController.login("username", "password");
-
-            //Toast.makeText(LoginActivity.this, result, Toast.LENGTH_SHORT).show();
-
-            /*HttpAgent.get("https://rest-api.janine.project89109.nl/authentication/token?username=" + email + "&password=" + password)
-                .goJson(new JsonCallback() {
-                    @Override
-                    protected void onDone(boolean success, JSONObject jsonObject) {
-                        String results = getStringResults();
-                        JSONObject jsonResult;
-                        User claimSet = null;
-                        String token = null;
-
-                        try {
-                            jsonResult = new JSONObject(results);
-                            token = jc.getString(jsonResult, "token");
-
-                            Gson gson = new Gson();
-                            claimSet =  gson.fromJson(jc.getString(jsonResult, "claimSet"), User.class);
-                            //claimSet = new JSONObject(jc.getString(jsonResult, "claimSet"));
-                            sp.setToken(token);
-                        } catch (Throwable t) {
-
-                        }
-
-                        if (!TextUtils.isEmpty(token)) {
-                            Intent menuIntent = new Intent(LoginActivity.this, MenuActivity.class);
-                            if(claimSet != null) {
-                                menuIntent.putExtra("claimSet", (Parcelable) claimSet);
-                            }
-                            startActivity(menuIntent);
-                        } else {
-                            Toast.makeText(LoginActivity.this, "Geen geldige login", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });*/
+            getToken(email, password);
         }
+    }
+
+    public void getToken(String username, String password) {
+        final StorageProvider sp = new StorageProvider(this);
+
+        HttpAgent.get(BASE_URL + "authentication/token")
+        .queryParams("username",username,"password",password)
+        .goJson(new JsonCallback() {
+            @Override
+            protected void onDone(boolean success, JSONObject jsonObject) {
+                try {
+                    Gson gson = new Gson();
+                    User user = gson.fromJson(getStringResults(), User.class);
+                    String token = user.getToken();
+                    if(!TextUtils.isEmpty(user.getToken())) {
+                        sp.setToken(user.getToken());
+
+                        Intent menuIntent = new Intent(LoginActivity.this, MenuActivity.class);
+                        if(user.getClaimSet() != null) {
+                            menuIntent.putExtra("claimSet", (Parcelable) user.getClaimSet());
+                        }
+                        startActivity(menuIntent);
+                    } else {
+                        Toast.makeText(LoginActivity.this, "Geen geldige login", Toast.LENGTH_SHORT).show();
+                    }
+                }
+                catch (Throwable t) {}
+            }
+        });
     }
 
     private boolean isEmailValid(String email) {
