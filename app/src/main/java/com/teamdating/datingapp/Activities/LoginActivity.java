@@ -39,7 +39,6 @@ import com.studioidan.httpagent.HttpAgent;
 import com.studioidan.httpagent.JsonCallback;
 import com.teamdating.datingapp.Models.User;
 import com.teamdating.datingapp.R;
-import com.teamdating.datingapp.Services.ApiService;
 import com.teamdating.datingapp.StorageProvider;
 
 import org.json.JSONObject;
@@ -78,7 +77,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private EditText mPasswordView;
     private View mProgressView;
     private View mLoginFormView;
-    private ApiService apiService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -118,7 +116,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         if (!mayRequestContacts()) {
             return;
         }
-
         getLoaderManager().initLoader(0, null, this);
     }
 
@@ -164,29 +161,23 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      */
     private void attemptLogin() {
         final StorageProvider sp = new StorageProvider(this);
-
         if (mAuthTask != null) {
             return;
         }
-
         // Reset errors.
         mEmailView.setError(null);
         mPasswordView.setError(null);
-
         // Store values at the time of the login attempt.
         String email = mEmailView.getText().toString();
         String password = mPasswordView.getText().toString();
-
         boolean cancel = false;
         View focusView = null;
-
         // Check for a valid password, if the user entered one.
         if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
             mPasswordView.setError(getString(R.string.error_invalid_password));
             focusView = mPasswordView;
             cancel = true;
         }
-
         if (cancel) {
             // There was an error; don't attempt login and focus the first
             // form field with an error.
@@ -198,7 +189,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
     public void getToken(String username, String password) {
         final StorageProvider sp = new StorageProvider(this);
-
         HttpAgent.get(BASE_URL + "authentication/token")
         .queryParams("username",username,"password",password)
         .goJson(new JsonCallback() {
@@ -210,12 +200,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                     String token = user.getToken();
                     if(!TextUtils.isEmpty(user.getToken())) {
                         sp.setToken(user.getToken());
-
-                        Intent menuIntent = new Intent(LoginActivity.this, MenuActivity.class);
                         if(user.getClaimSet() != null) {
-                            menuIntent.putExtra("claimSet", (Parcelable) user.getClaimSet());
+                            startMenu();
                         }
-                        startActivity(menuIntent);
                     } else {
                         Toast.makeText(LoginActivity.this, "Geen geldige login", Toast.LENGTH_SHORT).show();
                     }
@@ -223,6 +210,13 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 catch (Throwable t) {}
             }
         });
+    }
+
+    private void startMenu () {
+        //User user = new User();
+        Intent menuIntent = new Intent(LoginActivity.this, MenuActivity.class);
+        //menuIntent.putExtra("claimSet", (Parcelable) user.getClaimSet());
+        LoginActivity.this.startActivity(menuIntent);
     }
 
     private boolean isEmailValid(String email) {
@@ -238,9 +232,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      */
     @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
     private void showProgress(final boolean show) {
-        // On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
-        // for very easy animations. If available, use these APIs to fade-in
-        // the progress spinner.
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
             int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
 
@@ -294,13 +285,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             emails.add(cursor.getString(ProfileQuery.ADDRESS));
             cursor.moveToNext();
         }
-
         addEmailsToAutoComplete(emails);
     }
 
     @Override
     public void onLoaderReset(Loader<Cursor> cursorLoader) {
-
     }
 
     private void addEmailsToAutoComplete(List<String> emailAddressCollection) {
@@ -308,7 +297,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         ArrayAdapter<String> adapter =
                 new ArrayAdapter<>(LoginActivity.this,
                         android.R.layout.simple_dropdown_item_1line, emailAddressCollection);
-
         mEmailView.setAdapter(adapter);
     }
 
@@ -318,7 +306,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 ContactsContract.CommonDataKinds.Email.ADDRESS,
                 ContactsContract.CommonDataKinds.Email.IS_PRIMARY,
         };
-
         int ADDRESS = 0;
         int IS_PRIMARY = 1;
     }
@@ -331,7 +318,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         private final String mEmail;
         private final String mPassword;
-
         UserLoginTask(String email, String password) {
             mEmail = email;
             mPassword = password;
@@ -360,7 +346,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         protected void onPostExecute(final Boolean success) {
             mAuthTask = null;
             showProgress(false);
-
             if (success) {
                 finish();
             } else {

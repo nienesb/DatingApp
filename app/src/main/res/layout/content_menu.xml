@@ -8,15 +8,4 @@
     tools:context="com.teamdating.datingapp.Activities.MenuActivity"
     tools:showIn="@layout/app_bar_menu">
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:paddingTop="@dimen/nav_header_vertical_spacing"
-        app:srcCompat="@drawable/green8group"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
-
 </android.support.constraint.ConstraintLayout>
