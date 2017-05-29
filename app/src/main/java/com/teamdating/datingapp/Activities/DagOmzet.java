@@ -32,6 +32,7 @@ public class DagOmzet extends AppCompatActivity {
 
     Gson gson = new Gson();
     List<DailyTarget> dailyTargetList = new ArrayList<DailyTarget>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,7 +49,7 @@ public class DagOmzet extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        if(id == 16908332) { // TODO: Find a way to get the back button id?, for now hardcoded
+        if (id == 16908332) { // TODO: Find a way to get the back button id?, for now hardcoded
             Intent intent = new Intent(DagOmzet.this, MenuActivity.class);
             startActivity(intent);
             return true;
@@ -60,46 +61,44 @@ public class DagOmzet extends AppCompatActivity {
         StorageProvider sp = new StorageProvider(this);
         String token = sp.getToken();
         HttpAgent.get("https://rest-api.janine.project89109.nl/platforms")
-        .headers("Authorization", "token " + token, "Content-Type", "application/json")
-        .goJsonArray(new JsonArrayCallback() {
-            @Override
-            protected void onDone(boolean success, JSONArray jsonArray) {
-                if (jsonArray != null) {
-                    platforms = jsonArray;
-                    getResults();
-                } else {
-                    Toast.makeText(DagOmzet.this, "Geen resultaten van platforms ontvangen", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
+                .headers("Authorization", "token " + token, "Content-Type", "application/json")
+                .goJsonArray(new JsonArrayCallback() {
+                    @Override
+                    protected void onDone(boolean success, JSONArray jsonArray) {
+                        if (jsonArray != null) {
+                            platforms = jsonArray;
+                            getResults();
+                        } else {
+                            Toast.makeText(DagOmzet.this, "Geen resultaten van platforms ontvangen", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
     }
 
     private void getResults() {
         StorageProvider sp = new StorageProvider(this);
         String token = sp.getToken();
         HttpAgent.get("https://rest-api.janine.project89109.nl/stats/daily-targets")
-        .headers("Authorization", "token " + token, "Content-Type", "application/json")
-        .goJsonArray(new JsonArrayCallback() {
-            @Override
-            protected void onDone(boolean success, JSONArray jsonArray) {
-            if (jsonArray != null) {
-                jsonArray = addPlatformsToStats(jsonArray);
-                createDailyTargetList(jsonArray);
-                //TODO ADD jsonArray TO ARRAYADAPTER and set it to the listview
-            } else {
-                Toast.makeText(DagOmzet.this, "Geen resultaten van daily-targets ontvangen", Toast.LENGTH_SHORT).show();
-            }
-            }
-        });
+                .headers("Authorization", "token " + token, "Content-Type", "application/json")
+                .goJsonArray(new JsonArrayCallback() {
+                    @Override
+                    protected void onDone(boolean success, JSONArray jsonArray) {
+                        if (jsonArray != null) {
+                            jsonArray = addPlatformsToStats(jsonArray);
+                            createDailyTargetList(jsonArray);
+                        } else {
+                            Toast.makeText(DagOmzet.this, "Geen resultaten van daily-targets ontvangen", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
     }
 
     private void createDailyTargetList(JSONArray jsonArray) {
-        for(int i = 0; i < jsonArray.length(); i++){
+        for (int i = 0; i < jsonArray.length(); i++) {
             try {
                 DailyTarget dailyTarget = gson.fromJson(jsonArray.get(i).toString(), DailyTarget.class);
                 dailyTargetList.add(dailyTarget);
-            }
-            catch (JSONException e) {
+            } catch (JSONException e) {
                 e.printStackTrace();
             }
         }
@@ -107,10 +106,10 @@ public class DagOmzet extends AppCompatActivity {
 
     public JSONArray addPlatformsToStats(JSONArray jsonArray) {
         for (int i = 0; i < platforms.length(); i++) {
-            for(int p = 0; p < jsonArray.length(); p++) {
+            for (int p = 0; p < jsonArray.length(); p++) {
                 try {
                     if (platforms.getJSONObject(i).getInt("id") == jsonArray.getJSONObject(p).getInt("platformId")) {
-                        jsonArray.getJSONObject(p).put("platform",platforms.getJSONObject(i));
+                        jsonArray.getJSONObject(p).put("platform", platforms.getJSONObject(i));
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();

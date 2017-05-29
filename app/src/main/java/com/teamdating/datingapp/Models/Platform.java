@@ -13,12 +13,12 @@ public class Platform {
     private String name;
     private String hostname;
     private String aliasName;
-    private String trackthisWebsiteIds;
-    private String trackthisCountryIds;
-    private String trackthisPaymentTypeIds;
-    private String trackthisDeviceIds;
+    private String[] trackthisWebsiteIds;
+    private String[] trackthisCountryIds;
+    private String[] trackthisPaymentTypeIds;
+    private String[] trackthisDeviceIds;
     private String messagecentralPlatformId;
-    private String groupIds;
+    private String[] groupIds;
     private Integer googleAnalyticsId;
     private Date firstPaymentDate;
     private Date firstSignupDate;
@@ -73,35 +73,35 @@ public class Platform {
         this.aliasName = aliasName;
     }
 
-    public String getTrackthisWebsiteIds() {
+    public String[] getTrackthisWebsiteIds() {
         return trackthisWebsiteIds;
     }
 
-    public void setTrackthisWebsiteIds(String trackthisWebsiteIds) {
+    public void setTrackthisWebsiteIds(String[] trackthisWebsiteIds) {
         this.trackthisWebsiteIds = trackthisWebsiteIds;
     }
 
-    public String getTrackthisCountryIds() {
+    public String[] getTrackthisCountryIds() {
         return trackthisCountryIds;
     }
 
-    public void setTrackthisCountryIds(String trackthisCountryIds) {
+    public void setTrackthisCountryIds(String[] trackthisCountryIds) {
         this.trackthisCountryIds = trackthisCountryIds;
     }
 
-    public String getTrackthisPaymentTypeIds() {
+    public String[] getTrackthisPaymentTypeIds() {
         return trackthisPaymentTypeIds;
     }
 
-    public void setTrackthisPaymentTypeIds(String trackthisPaymentTypeIds) {
+    public void setTrackthisPaymentTypeIds(String[] trackthisPaymentTypeIds) {
         this.trackthisPaymentTypeIds = trackthisPaymentTypeIds;
     }
 
-    public String getTrackthisDeviceIds() {
+    public String[] getTrackthisDeviceIds() {
         return trackthisDeviceIds;
     }
 
-    public void setTrackthisDeviceIds(String trackthisDeviceIds) {
+    public void setTrackthisDeviceIds(String[] trackthisDeviceIds) {
         this.trackthisDeviceIds = trackthisDeviceIds;
     }
 
@@ -113,19 +113,19 @@ public class Platform {
         this.messagecentralPlatformId = messagecentralPlatformId;
     }
 
-    public String getGroupIds() {
+    public String[] getGroupIds() {
         return groupIds;
     }
 
-    public void setGroupIds(String groupIds) {
+    public void setGroupIds(String[] groupIds) {
         this.groupIds = groupIds;
     }
 
-    public int getGoogleAnalyticsId() {
+    public Integer getGoogleAnalyticsId() {
         return googleAnalyticsId;
     }
 
-    public void setGoogleAnalyticsId(int googleAnalyticsId) {
+    public void setGoogleAnalyticsId(Integer googleAnalyticsId) {
         this.googleAnalyticsId = googleAnalyticsId;
     }
 
@@ -145,11 +145,11 @@ public class Platform {
         this.firstSignupDate = firstSignupDate;
     }
 
-    public int getMessagecentralId() {
+    public Integer getMessagecentralId() {
         return messagecentralId;
     }
 
-    public void setMessagecentralId(int messagecentralId) {
+    public void setMessagecentralId(Integer messagecentralId) {
         this.messagecentralId = messagecentralId;
     }
 
