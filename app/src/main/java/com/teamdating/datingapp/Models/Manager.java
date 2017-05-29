@@ -44,10 +44,4 @@ public class Manager {
     public void setDeleted(Date deleted) {
         this.deleted = deleted;
     }
-
-    @Override
-    public String toString() {
-        return "ClassPojo [id = " + id + ", created = " + created + ", name = " + name + ", deleted = " + deleted + "]";
-    }
-
 }

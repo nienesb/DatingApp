@@ -68,9 +68,4 @@ public class Messagecentral {
     public void setName(String name) {
         this.name = name;
     }
-
-    @Override
-    public String toString() {
-        return "ClassPojo [port = " + port + ", id = " + id + ", weight = " + weight + ", host = " + host + ", scheme = " + scheme + ", token = " + token + ", name = " + name + "]";
-    }
 }

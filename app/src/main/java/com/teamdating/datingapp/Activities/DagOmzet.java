@@ -10,8 +10,11 @@ import android.view.MenuItem;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.studioidan.httpagent.HttpAgent;
 import com.studioidan.httpagent.JsonArrayCallback;
+import com.teamdating.datingapp.Models.DailyTarget;
+import com.teamdating.datingapp.Models.User;
 import com.teamdating.datingapp.R;
 import com.teamdating.datingapp.StorageProvider;
 
@@ -19,12 +22,16 @@ import org.json.JSONArray;
 import org.json.JSONException;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class DagOmzet extends AppCompatActivity {
 
     JSONArray platforms = new JSONArray();
     ArrayList stats = new ArrayList();
     private ListView mListView;
+
+    Gson gson = new Gson();
+    List<DailyTarget> dailyTargetList = new ArrayList<DailyTarget>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,15 +82,27 @@ public class DagOmzet extends AppCompatActivity {
         .goJsonArray(new JsonArrayCallback() {
             @Override
             protected void onDone(boolean success, JSONArray jsonArray) {
-                if (jsonArray != null) {
-                    jsonArray = addPlatformsToStats(jsonArray);
-                    jsonToList(jsonArray);
-                        //TODO ADD jsonArray TO ARRAYADAPTER and set it to the listview
-                } else {
-                    Toast.makeText(DagOmzet.this, "Geen resultaten van daily-targets ontvangen", Toast.LENGTH_SHORT).show();
-                }
+            if (jsonArray != null) {
+                jsonArray = addPlatformsToStats(jsonArray);
+                createDailyTargetList(jsonArray);
+                //TODO ADD jsonArray TO ARRAYADAPTER and set it to the listview
+            } else {
+                Toast.makeText(DagOmzet.this, "Geen resultaten van daily-targets ontvangen", Toast.LENGTH_SHORT).show();
+            }
             }
         });
+    }
+
+    private void createDailyTargetList(JSONArray jsonArray) {
+        for(int i = 0; i < jsonArray.length(); i++){
+            try {
+                DailyTarget dailyTarget = gson.fromJson(jsonArray.get(i).toString(), DailyTarget.class);
+                dailyTargetList.add(dailyTarget);
+            }
+            catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     public JSONArray addPlatformsToStats(JSONArray jsonArray) {
@@ -99,20 +118,5 @@ public class DagOmzet extends AppCompatActivity {
             }
         }
         return jsonArray;
-    }
-
-    private void jsonToList(JSONArray jsonArray) {
-        for(int p = 0; p < jsonArray.length(); p++) {
-            try {
-                stats.add(jsonArray.getJSONObject(p));
-                Toast.makeText(DagOmzet.this, stats.get(0).toString(), Toast.LENGTH_LONG).show();
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    private void showDagomzet(JSONArray jsonArray) {
-        Toast.makeText(DagOmzet.this, jsonArray.toString(), Toast.LENGTH_SHORT).show();
     }
 }
