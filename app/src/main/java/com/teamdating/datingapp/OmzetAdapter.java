@@ -26,32 +26,25 @@ import java.util.Map;
 
 import static android.R.id.list;
 
-public class JSONAdapter extends ArrayAdapter<List>{
+public class OmzetAdapter extends ArrayAdapter {
 
-    Context context;
+    private final Context context;
+    private final String [] values;
 
-    public JSONAdapter(@NonNull Context context, @LayoutRes int resource) {
-        super(context, resource);
+    public OmzetAdapter(Context context, int resource, String[] values) {
+        super(context, -1, values);
+        this.context = context;
+        this.values = values;
     }
-
-    /*public JSONAdapter(Context context, int resource, JSONArray jsonArray) {
-    }*/
-
-    private class ViewHolder {
-
-    }
-
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        // Get the data item for this position
-        //
-        // Check if an existing view is being reused, otherwise inflate the view
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.activity_dag_omzet, parent, false);
         }
         // Lookup view for data population
         ListView listView = (ListView) convertView.findViewById(R.id.list_view);
+
         // Populate the data into the template view using the data object
         // Return the completed view to render on screen
         return convertView;

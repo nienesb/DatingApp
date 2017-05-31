@@ -7,6 +7,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -15,6 +16,7 @@ import com.studioidan.httpagent.HttpAgent;
 import com.studioidan.httpagent.JsonArrayCallback;
 import com.teamdating.datingapp.Models.DailyTarget;
 import com.teamdating.datingapp.Models.User;
+import com.teamdating.datingapp.OmzetAdapter;
 import com.teamdating.datingapp.R;
 import com.teamdating.datingapp.StorageProvider;
 
@@ -27,7 +29,7 @@ import java.util.List;
 public class DagOmzet extends AppCompatActivity {
 
     JSONArray platforms = new JSONArray();
-    ArrayList stats = new ArrayList();
+    ArrayList jsonArray = new ArrayList();
     private ListView mListView;
 
     Gson gson = new Gson();
@@ -38,6 +40,9 @@ public class DagOmzet extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dag_omzet);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+
+        //set view
+        OmzetAdapter adapter = (OmzetAdapter) new ArrayAdapter(this, R.layout.activity_dag_omzet, jsonArray);
         mListView = (ListView) findViewById(R.id.list_view);
         setSupportActionBar(toolbar);
         getSupportActionBar().setHomeButtonEnabled(true);
