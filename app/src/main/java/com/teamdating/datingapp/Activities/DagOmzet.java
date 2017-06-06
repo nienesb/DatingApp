@@ -42,11 +42,11 @@ public class DagOmzet extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 
         //set view
-        OmzetAdapter adapter = (OmzetAdapter) new ArrayAdapter(this, R.layout.activity_dag_omzet, jsonArray);
+        OmzetAdapter adapter = new OmzetAdapter(this, R.layout.activity_dag_omzet, jsonArray);
         mListView = (ListView) findViewById(R.id.list_view);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setHomeButtonEnabled(true);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        //getSupportActionBar().setHomeButtonEnabled(true);
+        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getPlatforms();
     }
 

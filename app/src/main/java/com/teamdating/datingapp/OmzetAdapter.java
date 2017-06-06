@@ -29,9 +29,9 @@ import static android.R.id.list;
 public class OmzetAdapter extends ArrayAdapter {
 
     private final Context context;
-    private final String [] values;
+    private final ArrayList values;
 
-    public OmzetAdapter(Context context, int resource, String[] values) {
+    public OmzetAdapter(Context context, int resource, ArrayList values) {
         super(context, -1, values);
         this.context = context;
         this.values = values;
